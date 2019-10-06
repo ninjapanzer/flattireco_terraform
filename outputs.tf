@@ -1,23 +1,23 @@
-output "api_url" {
-  value = "${module.api.url}"
+output "auth_api_url" {
+  value = "${module.auth_api.url}"
 }
 
-output "api_methods" {
-  value = "${module.api.http_method}"
+output "auth_api_methods" {
+  value = "${module.auth_api.http_method}"
 }
 
-output "lambda_name" {
-  value = "${module.lambda.name}"
+output "auth_lambda_name" {
+  value = "${module.auth_lambda.name}"
 }
 
-output "lambda_arn" {
-  value = "${module.lambda.arn}"
+output "auth_lambda_arn" {
+  value = "${module.auth_lambda.arn}"
 }
 
-output "lambda_role" {
-  value = "${module.lambda.role_name}"
+output "auth_lambda_role" {
+  value = "${module.auth_lambda.role_name}"
 }
 
-output "lambda_role_id" {
-  value = "${module.lambda.role_id}"
+output "auth_lambda_role_id" {
+  value = "${module.auth_lambda.role_id}"
 }

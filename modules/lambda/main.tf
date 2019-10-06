@@ -19,10 +19,7 @@ resource "aws_lambda_function" "lambda" {
   }
 
   environment {
-    variables = {
-      lightspeed_client_id = "${var.lightspeed_client_id}"
-      lightspeed_client_secret = "${var.lightspeed_client_secret}"
-    }
+    variables = "${var.env}"
   }
 }
 

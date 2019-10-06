@@ -21,34 +21,35 @@ terraform {
 }
 
 ####################
-# API Gateway
+# Auth Lambda API Gateway
 ####################≈
-module "api" {
+module "auth_api" {
   source                   = "./modules/apigw"
   name                     = "${var.project}-${var.lambda_name}-${var.stage_name}"
   stage                    = "${var.stage_name}"
   method                   = "${var.method}"
   binary_type              = "${var.binary_type}"
   minimum_compression_size = "${var.minimum_compression_size}"
-  lambda_arn               = "${module.lambda.arn}"
-  lambda_arn_invoke        = "${module.lambda.arn_invoke}"
+  lambda_arn               = "${module.auth_lambda.arn}"
+  lambda_arn_invoke        = "${module.auth_lambda.arn_invoke}"
 }
 
 ####################
-# Lambda
+# Auth Lambda
 ####################
-module "lambda" {
+module "auth_lambda" {
   source             = "./modules/lambda"
   name               = "${var.project}-${var.lambda_name}-${var.stage_name}"
-  handler            = "${var.lambda_handler}"
+  handler            = "main"
   runtime            = "${var.lambda_runtime}"
   memory             = "${var.lambda_memory}"
   timeout            = "${var.lambda_timeout}"
-  package            = "${var.lambda_package}"
-  env                = "${var.lambda_env}"
+  package            = "auth_lambda/function.zip"
   tags               = "${var.lambda_tags}"
   security_group_ids = "${var.lambda_security_group_ids}"
   subnet_ids         = "${var.lambda_subnet_ids}"
-  lightspeed_client_id = "${var.lightspeed_client_id}"
-  lightspeed_client_secret = "${var.lightspeed_client_secret}"
+  env = {
+    lightspeed_client_id = "${var.lightspeed_client_id}"
+    lightspeed_client_secret = "${var.lightspeed_client_secret}"
+  }
 }
