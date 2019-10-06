@@ -44,6 +44,16 @@ module "auth_lambda" {
   auth_dynamo_arn = "${module.auth_table.arn}"
 }
 
+module "ls_authorization_lambda" {
+  source = "./ls_authorization_lambda"
+  lambda_name = "ls_authorization_lambda"
+  project = "${var.project}"
+  stage_name = "${var.stage_name}"
+  lightspeed_client_id = "${var.lightspeed_client_id}"
+  lightspeed_client_secret = "${var.lightspeed_client_secret}"
+  auth_dynamo_arn = "${module.auth_table.arn}"
+}
+
 module "auth_table" {
   source = "./modules/dynamodb/auth_table"
 }
