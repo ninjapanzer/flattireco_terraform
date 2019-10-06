@@ -1,32 +1,15 @@
-####################
-# Tags
-####################
+variable "lambda_name" {
+  description = "The name of the lambda function"
+  default = "flattireco_auth"
+}
+
 variable "project" {
-  description = "Project name for tags and resource naming"
-  default = "flattireco"
+  description = "project name"
 }
 
 variable "stage_name" {
-  description = "The stage name(production/staging/etc..)"
-  default = "dev"
+  description = "stage name"
 }
-
-variable "region" {
-  description = "The AWS region, e.g., eu-west-1"
-  default = "us-east-1"
-}
-
-variable "access_key" {
-  description = "provider access key"
-}
-
-variable "secret_key" {
-  description = "provider secret key"
-}
-
-####################
-# Lambda
-####################
 
 variable "lambda_runtime" {
   description = "The runtime of the lambda function"
@@ -77,29 +60,14 @@ variable lambda_subnet_ids {
   type        = "list"
 }
 
+variable auth_dynamo_arn {
+  description = "auth table arn"
+}
+
 variable lightspeed_client_id {
   description = "client id for lightspeed api"
 }
 
 variable lightspeed_client_secret {
   description = "client secret for lightspeed api"
-}
-
-####################
-# API Gateway
-####################
-variable "binary_type" {
-  description = "The list of binary media types supported by the RestApi"
-  type        = "list"
-  default     = ["*/*"]
-}
-
-variable "minimum_compression_size" {
-  description = "The minimum response size to compress for the REST API"
-  default     = 0
-}
-
-variable "method" {
-  description = "The HTTP method for the REST API"
-  default     = "ANY"
 }

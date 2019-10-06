@@ -25,7 +25,7 @@ terraform {
 ####################≈
 module "auth_api" {
   source                   = "./modules/apigw"
-  name                     = "${var.project}-${var.lambda_name}-${var.stage_name}"
+  name                     = "${var.project}-${module.auth_lambda.name}-${var.stage_name}"
   stage                    = "${var.stage_name}"
   method                   = "${var.method}"
   binary_type              = "${var.binary_type}"
@@ -34,22 +34,16 @@ module "auth_api" {
   lambda_arn_invoke        = "${module.auth_lambda.arn_invoke}"
 }
 
-####################
-# Auth Lambda
-####################
 module "auth_lambda" {
-  source             = "./modules/lambda"
-  name               = "${var.project}-${var.lambda_name}-${var.stage_name}"
-  handler            = "main"
-  runtime            = "${var.lambda_runtime}"
-  memory             = "${var.lambda_memory}"
-  timeout            = "${var.lambda_timeout}"
-  package            = "auth_lambda/function.zip"
-  tags               = "${var.lambda_tags}"
-  security_group_ids = "${var.lambda_security_group_ids}"
-  subnet_ids         = "${var.lambda_subnet_ids}"
-  env = {
-    lightspeed_client_id = "${var.lightspeed_client_id}"
-    lightspeed_client_secret = "${var.lightspeed_client_secret}"
-  }
+  source = "./auth_lambda"
+  lambda_name = "flattireco_auth"
+  project = "${var.project}"
+  stage_name = "${var.stage_name}"
+  lightspeed_client_id = "${var.lightspeed_client_id}"
+  lightspeed_client_secret = "${var.lightspeed_client_secret}"
+  auth_dynamo_arn = "${module.auth_table.arn}"
+}
+
+module "auth_table" {
+  source = "./modules/dynamodb/auth_table"
 }
