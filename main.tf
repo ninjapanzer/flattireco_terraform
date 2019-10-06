@@ -9,6 +9,17 @@ provider "aws" {
   secret_key = "${var.secret_key}"
 }
 
+terraform {
+  backend "remote" {
+    hostname = "app.terraform.io"
+    organization = "flattireco"
+
+    workspaces {
+      name = "flattireco_terraform"
+    }
+  }
+}
+
 ####################
 # API Gateway
 ####################≈
