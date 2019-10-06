@@ -8,7 +8,7 @@ module "auth_lambda" {
   runtime            = "${var.lambda_runtime}"
   memory             = "${var.lambda_memory}"
   timeout            = "${var.lambda_timeout}"
-  package            = "./function.zip"
+  package            = "./auth_lambda/function.zip"
   tags               = "${var.lambda_tags}"
   security_group_ids = "${var.lambda_security_group_ids}"
   subnet_ids         = "${var.lambda_subnet_ids}"
