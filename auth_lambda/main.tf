@@ -18,10 +18,11 @@ module "auth_lambda" {
   }
 }
 
-resource "aws_iam_role" "iam_for_auth_table" {
-  name = "iam_for_auth_table"
+resource "aws_iam_role_policy" "iam_for_auth_table" {
+  name = "iam_for_${module.auth_lambda.role_name}_auth_table"
+  role = "${module.auth_lambda.role_id}"
 
-  assume_role_policy = <<EOF
+  policy = <<EOF
 {
   "Version": "2012-10-17",
   "Statement": [{
